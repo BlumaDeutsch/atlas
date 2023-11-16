@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0 auto;
+    width: 100%;
+}
+
+header {
+    height: 150px;
+    background: rgb(78, 184, 101);
+}
+
+main {
+    min-height: 600px;
+    background-image: url(https://plus.unsplash.com/premium_photo-1681488098851-e3913f3b1908?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzN8fG1hcHxlbnwwfHwwfHx8MA%3D%3D);
+    background-size: cover;
+    background-position: center;
+}
+
+img {
+    width: 40%;
+}
+
+.myCard{
+    background: rgba(0, 0, 0, 0.683);
+    border-radius: 15%;
+    margin: 20px;
+    color: rgb(78, 184, 101);
+}
+
