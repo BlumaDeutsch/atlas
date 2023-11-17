@@ -7,7 +7,6 @@ const urlCapital = `https://restcountries.com/v3.1/capital/`; // give country by
 
 const main = document.querySelector("#main");
 
-
 const getInfoAboutCountry = (country) => {
     fetch(urlName + country + fields)
         .then((res) => res.json())
@@ -36,6 +35,8 @@ const extractData = (data) => {
 }
 const createCard = (borders, capital, coin, flag, languages, name, population, region) => {
     // const card = document.querySelector("#card");
+    let countBorders = 0;
+
     const content = document.querySelector("#content");
 
     const card = document.createElement("div");
@@ -63,8 +64,9 @@ const createCard = (borders, capital, coin, flag, languages, name, population, r
         window.e = element
         console.log(e);
         card.innerHTML += `
-            <a  href="">${element}</a>
+            <a id=b${countBorders} href="javascript:NULL">${element}</a>
         `
+        ++countBorders;
     });
     flagg.innerHTML = `
         <img class="rounded-5 m-3 text-center" src=${flag} alt="flag">
@@ -78,11 +80,23 @@ const createCard = (borders, capital, coin, flag, languages, name, population, r
 
     content.append(flagg);
     content.append(card);
-    content.append(mapp)
-    
+    content.append(mapp);
+
+    addBorders(countBorders);
+
     console.log(`borders: ${borders}, capital: ${capital}, coin: ${coin}, flag: ${flag}, languages: ${languages}, population: ${population}, region: ${region}`);
 }
-
+const addBorders = (countBorders) => {
+    for (let index = 0; index < countBorders; index++) {
+        // console.log(`b${index}`);
+        // console.log(document.getElementById(`b${index}`).innerText);
+        document.getElementById(`b${index}`).addEventListener("click", () => {
+            console.log(document.getElementById(`b${index}`).textContent);
+            getInfoAboutCountry(document.getElementById(`b${index}`).textContent);
+        })
+        
+    }
+}
 
 const printData = (sw) => {
     console.log(sw);
