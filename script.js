@@ -12,9 +12,10 @@ const getInfoAboutCountry = (country) => {
     fetch(urlName + country + fields)
         .then((res) => res.json())
         .then((data) => {
+            console.log("do!!!");
             extractData(data[0])
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log("error", err));
 }
 
 const extractData = (data) => {
@@ -36,7 +37,17 @@ const extractData = (data) => {
 const createCard = (borders, capital, coin, flag, languages, name, population, region) => {
     // const card = document.querySelector("#card");
     const content = document.querySelector("#content");
+
     const card = document.createElement("div");
+    const flagg = document.createElement("div");
+    const mapp = document.createElement("div");
+
+    card.setAttribute("data-aos", "zoom-in");
+    card.setAttribute("data-aos-duration", "2000")
+
+    flagg.setAttribute("data-aos", "zoom-in");
+    flagg.setAttribute("data-aos-duration", "2000")
+
     card.className = "p-4 justify-content-center myCard";
     
     card.innerHTML = `
@@ -52,14 +63,23 @@ const createCard = (borders, capital, coin, flag, languages, name, population, r
         window.e = element
         console.log(e);
         card.innerHTML += `
-            <a href= "javascript:getInfoAboutCountry(e)">${element}</a>
+            <a  href="">${element}</a>
         `
     });
-    content.innerHTML = `
+    flagg.innerHTML = `
         <img class="rounded-5 m-3 text-center" src=${flag} alt="flag">
     `;
+    mapp.innerHTML = `
+        <img class="rounded-5 m-3 text-center" src="" alt="flag">
+    `
+    content.innerHTML = flagg;
     content.innerHTML += card;
+    content.innerHTML += mapp
+
+    content.append(flagg);
     content.append(card);
+    content.append(mapp)
+    
     console.log(`borders: ${borders}, capital: ${capital}, coin: ${coin}, flag: ${flag}, languages: ${languages}, population: ${population}, region: ${region}`);
 }
 
