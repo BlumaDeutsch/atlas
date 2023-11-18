@@ -140,7 +140,7 @@ const addBorders = (countBorders) => {
 
 const addBordersStart = (countries) => {
     countries.forEach((country) => {
-        document.getElementById(country).addEventListener("click", getInfoAboutCountry(document.getElementById(country).textContent));
+        document.getElementById(country).addEventListener("click", () => getInfoAboutCountry(document.getElementById(country).textContent));
     })
 }
 
