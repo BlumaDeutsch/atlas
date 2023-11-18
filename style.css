@@ -25,7 +25,7 @@ header a:hover{
 }
 
 main {
-    min-height: 600px;
+    min-height: 1000px;
     background-image: url(https://plus.unsplash.com/premium_photo-1681488098851-e3913f3b1908?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NzN8fG1hcHxlbnwwfHwwfHx8MA%3D%3D);
     background-size: cover;
     background-position: center;

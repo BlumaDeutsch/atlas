@@ -1,7 +1,7 @@
 // import { getInfoAboutCountry } from "./functions.js";
 const urlAll = `https://restcountries.com/v3.1/all/`; // give all countries
 let capital = "rome";
-let fields = "?fields=population,region,languages,currencies,capital,flags,borders,name";
+let fields = "?fields=population,region,languages,currencies,capital,flags,borders,name,capitalInfo,area";
 const urlName = `https://restcountries.com/v3.1/name/`; // give country by name
 const urlCapital = `https://restcountries.com/v3.1/capital/`; // give country by capital
 
@@ -11,7 +11,7 @@ const getInfoAboutCountry = (country) => {
     fetch(urlName + country + fields)
         .then((res) => res.json())
         .then((data) => {
-            console.log("do!!!");
+            console.log(data[0]);
             extractData(data[0])
         })
         .catch((err) => console.log("error", err));
@@ -27,13 +27,16 @@ const extractData = (data) => {
     const name = data.name.common;
     const population = data.population;
     const region = data.region;
+    const [lat, lon] = data.capitalInfo.latlng;
+    const area = data.area;
+    console.log(lat, "ppp", lon);
     if (borders.length === 0) {
         borders[0] = `${name} is an iland!`
     }
 
-    createCard(borders, capital, coin, flag, languages, name, population, region);
+    createCard(borders, capital, coin, flag, languages, name, population, region, lat, lon, area);
 }
-const createCard = (borders, capital, coin, flag, languages, name, population, region) => {
+const createCard = (borders, capital, coin, flag, languages, name, population, region, lat, lon, area) => {
     // const card = document.querySelector("#card");
     let countBorders = 0;
 
@@ -44,13 +47,16 @@ const createCard = (borders, capital, coin, flag, languages, name, population, r
     const mapp = document.createElement("div");
 
     card.setAttribute("data-aos", "zoom-in");
-    card.setAttribute("data-aos-duration", "2000")
+    card.setAttribute("data-aos-duration", "2000");
 
     flagg.setAttribute("data-aos", "zoom-in");
-    flagg.setAttribute("data-aos-duration", "2000")
+    flagg.setAttribute("data-aos-duration", "2000");
+
+    mapp.setAttribute("data-aos", "zoom-in");
+    mapp.setAttribute("data-aos-duration", "2000");
 
     card.className = "p-4 justify-content-center myCard";
-    
+
     card.innerHTML = `
             <h2>${name}</h2>
             <h4>POP: ${population}</h4>
@@ -71,9 +77,31 @@ const createCard = (borders, capital, coin, flag, languages, name, population, r
     flagg.innerHTML = `
         <img class="rounded-5 m-3 text-center" src=${flag} alt="flag">
     `;
-    mapp.innerHTML = `
-        <img class="rounded-5 m-3 text-center" src="" alt="flag">
-    `
+    if (area < 100000) {
+        mapp.innerHTML = `
+        <iframe class="rounded-5 m-3 text-center" width="100%" height="100%" frameborder="0" scrolling="yes" marginwidth="0"
+        src="https://maps.google.com/maps?q=${lat},${lon}&hl=iw&z=6&amp;output=embed">
+        </iframe>
+    `}
+    else if (area < 1000000) {
+        mapp.innerHTML = `
+        <iframe class="rounded-5 m-3 text-center" width="100%" height="100%" frameborder="0" scrolling="yes" marginwidth="0"
+        src="https://maps.google.com/maps?q=${lat},${lon}&hl=iw&z=4&amp;output=embed">
+        </iframe>
+    `}
+    else if (area < 10000000) {
+        mapp.innerHTML = `
+        <iframe class="rounded-5 m-3 text-center" width="100%" height="100%" frameborder="0" scrolling="yes" marginwidth="0"
+        src="https://maps.google.com/maps?q=${lat},${lon}&hl=iw&z=3&amp;output=embed">
+        </iframe>
+    `}
+    else {
+        mapp.innerHTML = `
+        <iframe class="rounded-5 m-3 text-center" width="100%" height="100%" frameborder="0" scrolling="yes" marginwidth="0"
+        src="https://maps.google.com/maps?q=${lat},${lon}&hl=iw&z=2&amp;output=embed">
+        </iframe>
+    `}
+
     content.innerHTML = flagg;
     content.innerHTML += card;
     content.innerHTML += mapp
@@ -94,7 +122,7 @@ const addBorders = (countBorders) => {
             console.log(document.getElementById(`b${index}`).textContent);
             getInfoAboutCountry(document.getElementById(`b${index}`).textContent);
         })
-        
+
     }
 }
 
