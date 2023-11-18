@@ -1,20 +1,33 @@
 // import { getInfoAboutCountry } from "./functions.js";
 const urlAll = `https://restcountries.com/v3.1/all/`; // give all countries
 let capital = "rome";
-let fields = "?fields=population,region,languages,currencies,capital,flags,borders,name,capitalInfo,area";
+
+let options = {
+    fields: "population,region,languages,currencies,capital,flags,borders,name,capitalInfo,area",
+};
 const urlName = `https://restcountries.com/v3.1/name/`; // give country by name
 const urlCapital = `https://restcountries.com/v3.1/capital/`; // give country by capital
 
 const main = document.querySelector("#main");
 
+const fetchApiAxios = async (urlName, options) => {
+    const res = await axios.get(urlName, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Client-ID PGxw-cCQLzjhHfIamSQpXGP0VBiWr1FW2GxDGjtc3dQ",
+        },
+        params: options,
+    });
+    return res.data;
+};
+
 const getInfoAboutCountry = (country) => {
-    fetch(urlName + country + fields)
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data[0]);
-            extractData(data[0])
-        })
-        .catch((err) => console.log("error", err));
+    fetchApiAxios(urlName + country, options) //url, searchTerm, orientation, page
+    .then((data) => {
+        console.log(data[0]);
+        extractData(data[0])
+    })
+    .catch((err) => console.log(err));
 }
 
 const extractData = (data) => {
@@ -129,13 +142,13 @@ const addBorders = (countBorders) => {
 const printData = (sw) => {
     console.log(sw);
 }
-const options = document.querySelector("#select");
+const countryOptions = document.querySelector("#select");
 
 
 const select = (countries) => {
 
     countries.forEach((country) => {
-        options.innerHTML += `
+        countryOptions.innerHTML += `
             <option value="${country.name.common}">${country.name.common}</option>
         `
 
@@ -143,7 +156,7 @@ const select = (countries) => {
 
 }
 
-options.addEventListener("change", (country) => {
+countryOptions.addEventListener("change", (country) => {
     getInfoAboutCountry(country.target.value);
     console.log(country.target.value);
 })
