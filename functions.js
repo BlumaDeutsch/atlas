@@ -175,4 +175,4 @@ const getListOfCountries = () => {
 
 
 
-export { getInfoAboutCountry, getListOfCountries, addBordersStart };
+export { getListOfCountries, addBordersStart };
