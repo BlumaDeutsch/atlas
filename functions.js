@@ -22,11 +22,11 @@ const fetchApiAxios = async (urlName, options) => {
 
 const getInfoAboutCountry = (country) => {
     fetchApiAxios(urlName + country, options) //url, searchTerm, orientation, page
-    .then((data) => {
-        console.log(data[0]);
-        extractData(data[0])
-    })
-    .catch((err) => console.log(err));
+        .then((data) => {
+            console.log(data[0]);
+            extractData(data[0])
+        })
+        .catch((err) => console.log(err));
 }
 
 const extractData = (data) => {
@@ -138,6 +138,12 @@ const addBorders = (countBorders) => {
     }
 }
 
+const addBordersStart = (countries) => {
+    countries.forEach((country) => {
+        document.getElementById(country).addEventListener("click", getInfoAboutCountry(document.getElementById(`b${index}`).textContent));
+    })
+}
+
 const countryOptions = document.querySelector("#select");
 
 
@@ -169,4 +175,4 @@ const getListOfCountries = () => {
 
 
 
-export { getInfoAboutCountry, getListOfCountries };
+export { getInfoAboutCountry, getListOfCountries, addBordersStart };
