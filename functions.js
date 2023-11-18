@@ -1,4 +1,3 @@
-
 const urlAll = `https://restcountries.com/v3.1/all/`; // give all countries
 let capital = "rome";
 

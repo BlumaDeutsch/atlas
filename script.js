@@ -1,4 +1,4 @@
-// import { getInfoAboutCountry, getListOfCountries } from "./functions.js";
+import { getInfoAboutCountry, getListOfCountries } from "./functions.js";
 
 
 getListOfCountries();
